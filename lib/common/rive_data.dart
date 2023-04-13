@@ -1,43 +1,41 @@
-import 'package:animiated_sidebar_menu/domain/model/rive_asset.dart';
+import 'package:animiated_sidebar_menu/domain/model/side_menu_data.dart';
+import 'package:animiated_sidebar_menu/presentation/home/home_screen.dart';
+import 'package:animiated_sidebar_menu/presentation/search/search_screen.dart';
+import 'package:flutter/material.dart';
 
-List<RiveAsset> sideMenu1 = [
-  RiveAsset(
-    'assets/rive/icons.riv',
-    artboard: 'HOME',
-    stateMachineName: 'HOME_interactivity',
+
+List<SideMenuData> topMenuList = [
+  SideMenuData(
     title: 'Home',
+    iconData: Icons.home_outlined,
+    screen: const HomeScreen(),
   ),
-  RiveAsset(
-    'assets/rive/icons.riv',
-    artboard: 'SEARCH',
-    stateMachineName: 'SEARCH_Interactivity',
+  SideMenuData(
     title: 'Search',
+    iconData: Icons.search_outlined,
+    screen: const SearchScreen(),
   ),
-  RiveAsset(
-    'assets/rive/icons.riv',
-    artboard: 'LIKE/STAR',
-    stateMachineName: 'STAR_Interactivity',
+  SideMenuData(
     title: 'Favorites',
+    iconData: Icons.favorite_outline,
+    screen: const HomeScreen(),
   ),
-  RiveAsset(
-    'assets/rive/icons.riv',
-    artboard: 'CHAT',
-    stateMachineName: 'CHAT_Interactivity',
+  SideMenuData(
     title: 'Help',
+    iconData: Icons.chat_outlined,
+    screen: const HomeScreen(),
   ),
 ];
 
-List<RiveAsset> sideMenu2 = [
-  RiveAsset(
-    'assets/rive/icons.riv',
-    artboard: 'TIMER',
-    stateMachineName: 'TIMER_Interactivity',
+List<SideMenuData> bottomMenuList = [
+  SideMenuData(
     title: 'History',
+    iconData: Icons.timer_outlined,
+    screen: const HomeScreen(),
   ),
-  RiveAsset(
-    'assets/rive/icons.riv',
-    artboard: 'BELL',
-    stateMachineName: 'BELL_Interactivity',
+  SideMenuData(
     title: 'Notification',
-  ),
+    iconData: Icons.notifications_outlined,
+    screen: const HomeScreen(),
+  )
 ];

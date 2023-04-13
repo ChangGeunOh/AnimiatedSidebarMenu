@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:rive/rive.dart';
 
 class MenuBtn extends StatelessWidget {
   const MenuBtn({
     super.key,
     required this.press,
-    required this.riveOnInit,
+    required this.isClosed,
   });
 
   final VoidCallback press;
-  final ValueChanged<Artboard> riveOnInit;
+  final bool isClosed;
 
   @override
   Widget build(BuildContext context) {
@@ -32,9 +31,9 @@ class MenuBtn extends StatelessWidget {
               ),
             ],
           ),
-          child: RiveAnimation.asset(
-            'assets/rive/humberger_menu.riv',
-            onInit: riveOnInit,
+          child: Icon(
+            isClosed ? Icons.menu : Icons.close,
+            color: Colors.grey,
           ),
         ),
       ),

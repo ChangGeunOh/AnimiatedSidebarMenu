@@ -1,13 +1,11 @@
 import 'package:animiated_sidebar_menu/common/rive_data.dart';
-import 'package:animiated_sidebar_menu/common/utils/rive_utils.dart';
-import 'package:animiated_sidebar_menu/domain/model/rive_asset.dart';
+import 'package:animiated_sidebar_menu/domain/model/side_menu_data.dart';
 import 'package:animiated_sidebar_menu/presentation/component/info_card.dart';
 import 'package:animiated_sidebar_menu/presentation/component/side_menu_title.dart';
 import 'package:flutter/material.dart';
-import 'package:rive/rive.dart';
 
 class SideMenu extends StatefulWidget {
-  final ValueChanged<RiveAsset> onClick;
+  final ValueChanged<SideMenuData> onClick;
 
   const SideMenu({
     Key? key,
@@ -19,7 +17,8 @@ class SideMenu extends StatefulWidget {
 }
 
 class _SideMenuState extends State<SideMenu> {
-  RiveAsset selectedMenu = sideMenu1.first;
+
+  SideMenuData selectedSideMenu = topMenuList.first;
 
   @override
   Widget build(BuildContext context) {
@@ -50,27 +49,16 @@ class _SideMenuState extends State<SideMenu> {
                       .copyWith(color: Colors.white70),
                 ),
               ),
-              ...sideMenu1.map(
-                (menu) => SideMenuTitle(
-                  menu: menu,
-                  isActive: menu == selectedMenu,
-                  press: () {
-                    menu.input!.change(true);
-                    Future.delayed(const Duration(seconds: 1), () {
-                      menu.input!.change(false);
-                    });
+
+              ...topMenuList.map(
+                (e) => SideMenuTitle(
+                  menuData: e,
+                  isActive: selectedSideMenu == e,
+                  onClickMenu: (menuData) {
+                    widget.onClick(menuData);
                     setState(() {
-                      selectedMenu = menu;
+                      selectedSideMenu = menuData;
                     });
-                    widget.onClick(menu);
-                  },
-                  riveonInit: (artboard) {
-                    StateMachineController controller =
-                        RiveUtils.getRiveController(
-                      artboard,
-                      stateMachineName: menu.stateMachineName,
-                    );
-                    menu.input = controller.findSMI('active') as SMIBool;
                   },
                 ),
               ),
@@ -88,26 +76,14 @@ class _SideMenuState extends State<SideMenu> {
                       .copyWith(color: Colors.white70),
                 ),
               ),
-              ...sideMenu2.map(
-                (menu) => SideMenuTitle(
-                  menu: menu,
-                  isActive: menu == selectedMenu,
-                  press: () {
-                    menu.input!.change(true);
-                    Future.delayed(const Duration(seconds: 1), () {
-                      menu.input!.change(false);
-                    });
+              ...bottomMenuList.map(
+                (e) => SideMenuTitle(
+                  menuData: e,
+                  isActive: selectedSideMenu == e,
+                  onClickMenu: (menuData) {
                     setState(() {
-                      selectedMenu = menu;
+                      selectedSideMenu = menuData;
                     });
-                  },
-                  riveonInit: (artboard) {
-                    StateMachineController controller =
-                        RiveUtils.getRiveController(
-                      artboard,
-                      stateMachineName: menu.stateMachineName,
-                    );
-                    menu.input = controller.findSMI('active') as SMIBool;
                   },
                 ),
               ),

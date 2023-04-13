@@ -1,14 +1,10 @@
 import 'dart:math';
 
 import 'package:animiated_sidebar_menu/common/rive_data.dart';
-import 'package:animiated_sidebar_menu/common/utils/rive_utils.dart';
-import 'package:animiated_sidebar_menu/domain/model/rive_asset.dart';
+import 'package:animiated_sidebar_menu/domain/model/side_menu_data.dart';
 import 'package:animiated_sidebar_menu/presentation/component/menu_btn.dart';
 import 'package:animiated_sidebar_menu/presentation/component/side_menu.dart';
-import 'package:animiated_sidebar_menu/presentation/home/home_screen.dart';
-import 'package:animiated_sidebar_menu/presentation/search/search_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:rive/rive.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({Key? key}) : super(key: key);
@@ -23,9 +19,8 @@ class _MainScreenState extends State<MainScreen>
   late Animation<double> animation;
   late Animation<double> scaleAnimation;
 
-  late SMIBool isSlideBarClosed;
   bool isSideMenuClosed = true;
-  RiveAsset selectedRiveAsset = sideMenu1.first;
+  SideMenuData selectedSideMenu = topMenuList.first;
 
   @override
   void initState() {
@@ -59,6 +54,7 @@ class _MainScreenState extends State<MainScreen>
 
   @override
   Widget build(BuildContext context) {
+    print('$isSideMenuClosed');
     return Scaffold(
       backgroundColor: const Color(0xFF17203A),
       resizeToAvoidBottomInset: true,
@@ -69,14 +65,12 @@ class _MainScreenState extends State<MainScreen>
             duration: const Duration(milliseconds: 200),
             curve: Curves.fastOutSlowIn,
             width: 288,
-            left: isSideMenuClosed ? 0 : -265,
+            left: 0, // isSideMenuClosed ? -265 : 0,
             height: MediaQuery.of(context).size.height,
             child: SideMenu(
-              onClick: (value) {
-                _animationController.reverse();
+              onClick: (value) async {
                 setState(() {
-                  selectedRiveAsset = value;
-                  isSideMenuClosed = false;
+                  selectedSideMenu = value;
                 });
               },
             ),
@@ -93,47 +87,31 @@ class _MainScreenState extends State<MainScreen>
                 scale: scaleAnimation.value,
                 child: ClipRRect(
                   borderRadius: const BorderRadius.all(Radius.circular(24)),
-                  child: renderScreen(selectedRiveAsset),
+                  child: selectedSideMenu.screen,
                 ),
               ),
             ),
           ),
           AnimatedPositioned(
             duration: const Duration(milliseconds: 200),
-            left: isSideMenuClosed ? 220 : 0,
+            left: isSideMenuClosed ? 0 : 220,
             curve: Curves.fastOutSlowIn,
             child: MenuBtn(
+              isClosed: isSideMenuClosed,
               press: () {
-                isSlideBarClosed.value = !isSlideBarClosed.value;
+                setState(() {
+                  isSideMenuClosed = !isSideMenuClosed;
+                });
                 if (isSideMenuClosed) {
                   _animationController.reverse();
                 } else {
                   _animationController.forward();
                 }
-                setState(() {
-                  isSideMenuClosed = isSlideBarClosed.value;
-                });
-              },
-              riveOnInit: (Artboard value) {
-                StateMachineController controller = RiveUtils.getRiveController(
-                  value,
-                  stateMachineName: 'State Machine 1',
-                );
-                isSlideBarClosed = controller.findSMI('isOpen') as SMIBool;
               },
             ),
           ),
         ],
       ),
     );
-  }
-
-  Widget renderScreen(RiveAsset riveAsset) {
-    switch (riveAsset.artboard) {
-      case 'SEARCH':
-        return const SearchScreen();
-      default:
-        return const HomeScreen();
-    }
   }
 }
