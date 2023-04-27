@@ -1,12 +1,16 @@
 import 'dart:math';
 
-import 'package:animiated_sidebar_menu/common/rive_data.dart';
+import 'package:animiated_sidebar_menu/common/const/side_menu.dart';
 import 'package:animiated_sidebar_menu/domain/model/side_menu_data.dart';
 import 'package:animiated_sidebar_menu/presentation/component/menu_btn.dart';
 import 'package:animiated_sidebar_menu/presentation/component/side_menu.dart';
 import 'package:flutter/material.dart';
 
 class MainScreen extends StatefulWidget {
+  static String get routePath => '/main';
+
+  static String get routeName => 'main';
+
   const MainScreen({Key? key}) : super(key: key);
 
   @override
@@ -65,7 +69,8 @@ class _MainScreenState extends State<MainScreen>
             duration: const Duration(milliseconds: 200),
             curve: Curves.fastOutSlowIn,
             width: 288,
-            left: 0, // isSideMenuClosed ? -265 : 0,
+            left: 0,
+            // isSideMenuClosed ? -265 : 0,
             height: MediaQuery.of(context).size.height,
             child: SideMenu(
               onClick: (value) async {

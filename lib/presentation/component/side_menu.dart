@@ -1,4 +1,4 @@
-import 'package:animiated_sidebar_menu/common/rive_data.dart';
+import 'package:animiated_sidebar_menu/common/const/side_menu.dart';
 import 'package:animiated_sidebar_menu/domain/model/side_menu_data.dart';
 import 'package:animiated_sidebar_menu/presentation/component/info_card.dart';
 import 'package:animiated_sidebar_menu/presentation/component/side_menu_title.dart';
